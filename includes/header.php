@@ -8,6 +8,9 @@
 
 <title>EWU Innovation Hub</title>
 
+<!-- Favicon / Logo -->
+<link rel="icon" type="image/png" href="assets/images/ewu_logo.png?v=1.1">
+
 <!-- Bootstrap CSS -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
