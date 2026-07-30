@@ -1,0 +1,46 @@
+CREATE DATABASE ewu_innovation_hub;
+
+USE ewu_innovation_hub;
+
+CREATE TABLE users (
+    user_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    role ENUM('student', 'faculty') NOT NULL,
+    department VARCHAR(50) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE ideas (
+    idea_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    student_id BIGINT NOT NULL,
+    title VARCHAR(255) NOT NULL,
+    description TEXT NOT NULL,
+    category VARCHAR(100) NOT NULL,
+    status ENUM('pending', 'approved', 'rejected') NOT NULL DEFAULT 'pending',
+    submitted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (student_id) REFERENCES users(user_id)
+);
+
+CREATE TABLE reviews (
+    review_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    idea_id BIGINT NOT NULL,
+    faculty_id BIGINT NOT NULL,
+    comment TEXT,
+    decision ENUM('approved', 'rejected'),
+    reviewed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (idea_id) REFERENCES ideas(idea_id),
+    FOREIGN KEY (faculty_id) REFERENCES users(user_id)
+);
+
+CREATE TABLE mentorship (
+    mentorship_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    idea_id BIGINT NOT NULL,
+    student_id BIGINT NOT NULL,
+    faculty_id BIGINT NOT NULL,
+    assigned_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (idea_id) REFERENCES ideas(idea_id),
+    FOREIGN KEY (student_id) REFERENCES users(user_id),
+    FOREIGN KEY (faculty_id) REFERENCES users(user_id)
+);
