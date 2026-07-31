@@ -1,3 +1,4 @@
+
 /* =========================
    Page Load Smooth Effect
 ========================= */
@@ -703,3 +704,200 @@ return;
 
 
 }
+
+
+/* =========================
+   REGISTER VALIDATION
+========================= */
+
+
+const registerForm =
+document.getElementById("registerForm");
+
+
+
+if(registerForm){
+
+
+
+registerForm.addEventListener("submit",(e)=>{
+
+
+const name =
+document.querySelector('input[name="name"]').value.trim();
+
+
+
+const email =
+document.querySelector('input[name="email"]').value.trim();
+
+
+
+const password =
+document.querySelector('input[name="password"]').value.trim();
+
+
+
+const confirmPassword =
+document.querySelector('input[name="confirm_password"]').value.trim();
+
+
+
+const message =
+document.getElementById("registerMessage");
+
+
+
+message.innerHTML="";
+
+
+
+
+
+if(name===""){
+
+
+e.preventDefault();
+
+
+message.innerHTML=
+
+`
+<div class="register-error">
+
+Please enter your name.
+
+</div>
+`;
+
+return;
+
+}
+
+
+
+
+
+const emailPattern =
+/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+
+
+if(!emailPattern.test(email)){
+
+
+e.preventDefault();
+
+
+message.innerHTML=
+
+`
+<div class="register-error">
+
+Enter a valid email.
+
+</div>
+`;
+
+return;
+
+
+}
+
+
+
+
+
+if(password.length < 6){
+
+
+e.preventDefault();
+
+
+message.innerHTML=
+
+`
+<div class="register-error">
+
+Password must be at least 6 characters.
+
+</div>
+`;
+
+return;
+
+
+}
+
+
+
+
+
+if(password !== confirmPassword){
+
+
+e.preventDefault();
+
+
+message.innerHTML=
+
+`
+<div class="register-error">
+
+Passwords do not match.
+
+</div>
+`;
+
+return;
+
+
+}
+
+
+
+});
+
+
+
+}
+
+/* =========================
+ PASSWORD SHOW HIDE
+========================= */
+
+document.querySelectorAll(".toggle-password").forEach(function(button){
+
+
+    button.addEventListener("click", function(){
+
+
+        let passwordInput = 
+        this.parentElement.querySelector(".password-field");
+
+
+
+        if(passwordInput.type === "password"){
+
+
+            passwordInput.type = "text";
+
+            this.innerHTML = "🙈";
+
+
+        } 
+        else {
+
+
+            passwordInput.type = "password";
+
+            this.innerHTML = "👁";
+
+
+        }
+
+
+    });
+
+
+});

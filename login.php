@@ -9,201 +9,207 @@ include "includes/navbar.php";
 <section class="auth-section">
 
 
-<div class="container">
+    <div class="container">
 
 
-<div class="row align-items-center min-vh-100">
+        <div class="row align-items-center min-vh-100">
 
 
-<!-- Left Content -->
+            <!-- Left Content -->
 
-<div class="col-lg-6 auth-left">
+            <div class="col-lg-6 auth-left">
 
 
-<h1>
-Welcome Back To
-<span>
-EWU Innovation Hub
-</span>
-</h1>
+                <h1>
+                    Welcome Back To
+                    <span>
+                        EWU Innovation Hub
+                    </span>
+                </h1>
 
 
-<p>
+                <p>
 
-Login to explore innovative ideas, connect with faculty mentors,
-and continue your innovation journey.
+                    Login to explore innovative ideas, connect with faculty mentors,
+                    and continue your innovation journey.
 
-</p>
+                </p>
 
 
 
-<div class="auth-points">
+                <div class="auth-points">
 
 
-<div>
-💡 Share Innovative Ideas
-</div>
+                    <div>
+                        💡 Share Innovative Ideas
+                    </div>
 
 
-<div>
-👨‍🏫 Connect With Faculty Mentors
-</div>
+                    <div>
+                        👨‍🏫 Connect With Faculty Mentors
+                    </div>
 
 
-<div>
-🚀 Build Future Solutions
-</div>
+                    <div>
+                        🚀 Build Future Solutions
+                    </div>
 
 
-</div>
+                </div>
 
 
 
-</div>
+            </div>
 
 
 
 
 
-<!-- Login Card -->
+            <!-- Login Card -->
 
 
-<div class="col-lg-5 offset-lg-1">
+            <div class="col-lg-5 offset-lg-1">
 
 
-<div class="auth-card">
+                <div class="auth-card">
 
 
-<h2>
-Login
-</h2>
+                    <h2>
+                        Login
+                    </h2>
 
 
-<p class="auth-subtitle">
-Access your account
-</p>
+                    <p class="auth-subtitle">
+                        Access your account
+                    </p>
 
 
 
 
-<form 
-id="loginForm"
-action="auth/login_process.php" 
-method="POST">
+                    <form
+                        id="loginForm"
+                        action="auth/login_process.php"
+                        method="POST">
 
 
-<div class="input-group-custom">
+                        <div class="input-group-custom">
 
 
-<label>
-Email Address
-</label>
+                            <label>
+                                Email Address
+                            </label>
 
 
-<input 
-type="email"
-name="email"
-placeholder="Enter your email"
-required
->
+                            <input
+                                type="email"
+                                name="email"
+                                placeholder="Enter your email"
+                                required>
 
 
-</div>
+                        </div>
 
 
 
 
 
-<div class="input-group-custom">
+                        <div class="input-group-custom">
 
 
-<label>
-Password
-</label>
+                            <label>
+                                Password
+                            </label>
 
 
+                            <div class="password-wrapper">
 
-<input 
-type="password"
-name="password"
-placeholder="Enter your password"
-required
->
+                                <input
+                                    class="password-field"
+                                    type="password"
+                                    name="password"
+                                    placeholder="Enter your password">
 
 
+                                <button
+                                    type="button"
+                                    class="toggle-password">
+                                    👁
+                                </button>
 
-</div>
+                            </div>
 
 
 
+                        </div>
 
 
-<div class="remember">
 
 
-<div>
 
-<input 
-type="checkbox"
-name="remember"
->
+                        <div class="remember">
 
-Remember me
 
-</div>
+                            <div>
 
+                                <input
+                                    type="checkbox"
+                                    name="remember">
 
-<a href="#">
-Forgot Password?
-</a>
+                                Remember me
 
+                            </div>
 
-</div>
 
+                            <a href="#">
+                                Forgot Password?
+                            </a>
 
 
+                        </div>
 
-<div id="loginMessage"></div>
 
-<button 
-type="submit"
-class="auth-btn"
->
 
-Login
 
-</button>
+                        <div id="loginMessage"></div>
 
+                        <button
+                            type="submit"
+                            class="auth-btn">
 
+                            Login
 
+                        </button>
 
-<p class="register-text">
 
-Don't have an account?
 
-<a href="register.php">
-Create Account
-</a>
 
-</p>
+                        <p class="register-text">
 
+                            Don't have an account?
 
+                            <a href="register.php">
+                                Create Account
+                            </a>
 
+                        </p>
 
-</form>
 
 
-</div>
 
+                    </form>
 
-</div>
 
+                </div>
 
 
-</div>
+            </div>
 
 
-</div>
+
+        </div>
+
+
+    </div>
 
 
 </section>

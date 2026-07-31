@@ -1450,3 +1450,137 @@ body{
     border-radius:12px;
 
 }
+
+/* =========================
+   REGISTER PAGE
+========================= */
+
+
+.register-card{
+
+    max-width:450px;
+
+}
+
+
+
+.register-select{
+
+    width:100%;
+
+    padding:12px 18px;
+
+    border:none;
+
+    outline:none;
+
+    border-radius:14px;
+
+    font-size:15px;
+
+    background:white;
+
+    color:#333;
+
+}
+
+
+
+.register-select:focus{
+
+    box-shadow:
+
+    0 0 0 4px rgba(0,198,255,.3);
+
+}
+
+/* =========================
+   REGISTER MESSAGE
+========================= */
+
+
+#registerMessage{
+
+    margin-bottom:20px;
+
+    text-align:center;
+
+    font-size:14px;
+
+    font-weight:600;
+
+}
+
+
+.register-error{
+
+    background:rgba(255,0,0,.15);
+
+    color:#ffe0e0;
+
+    padding:12px;
+
+    border-radius:12px;
+
+}
+
+
+
+.register-success{
+
+    background:rgba(0,255,150,.15);
+
+    color:#dffff0;
+
+    padding:12px;
+
+    border-radius:12px;
+
+
+}
+
+   /* =========================
+ PASSWORD SHOW HIDE
+========================= */
+
+
+.password-wrapper{
+
+    position:relative;
+    width:100%;
+
+}
+
+
+.password-wrapper .password-field{
+
+    width:100%;
+    padding-right:55px !important;
+
+}
+
+
+
+.toggle-password{
+
+    position:absolute;
+
+    right:15px;
+
+    top:50%;
+
+    transform:translateY(-50%);
+
+
+    background:none;
+
+    border:none;
+
+    cursor:pointer;
+
+
+    font-size:18px;
+
+    z-index:10;
+
+}
