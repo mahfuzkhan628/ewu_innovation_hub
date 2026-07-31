@@ -328,3 +328,229 @@ behavior:"smooth"
 
 
 });
+
+/* =========================
+   LOGIN CARD 3D EFFECT
+========================= */
+
+
+const authCard = document.querySelector(".auth-card");
+
+
+if(authCard){
+
+
+authCard.addEventListener("mousemove",(e)=>{
+
+
+    const rect = authCard.getBoundingClientRect();
+
+
+    const x = e.clientX - rect.left;
+
+    const y = rect.top;
+
+
+
+});
+
+
+authCard.addEventListener("mouseleave",()=>{
+
+
+    authCard.style.transform =
+
+    `
+
+    perspective(1000px)
+
+    rotateX(0deg)
+
+    rotateY(0deg)
+
+    scale(1)
+
+    `;
+
+
+});
+
+
+}
+
+
+
+authCard.addEventListener("mouseleave",()=>{
+
+
+    authCard.style.transform =
+
+    `
+
+    perspective(1000px)
+
+    rotateX(0deg)
+
+    rotateY(0deg)
+
+    scale(1)
+
+    `;
+
+
+});
+
+
+
+}
+
+
+
+
+
+
+/* =========================
+   INPUT FOCUS ANIMATION
+========================= */
+
+
+const inputs =
+document.querySelectorAll(".input-group-custom input");
+
+
+
+inputs.forEach(input=>{
+
+
+input.addEventListener("focus",()=>{
+
+
+    input.parentElement.style.transform =
+    "translateY(-5px)";
+
+
+});
+
+
+
+
+
+input.addEventListener("blur",()=>{
+
+
+    input.parentElement.style.transform =
+    "translateY(0)";
+
+
+});
+
+
+});
+
+
+
+
+
+
+/* =========================
+   PASSWORD SHOW/HIDE
+========================= */
+
+
+const passwordInput =
+document.querySelector(
+'input[name="password"]'
+);
+
+
+
+if(passwordInput){
+
+
+let toggle =
+document.createElement("span");
+
+
+toggle.innerHTML="👁";
+
+
+toggle.style.cursor="pointer";
+
+toggle.style.position="absolute";
+
+toggle.style.right="20px";
+
+toggle.style.marginTop="-43px";
+
+toggle.style.color="#764ba2";
+
+
+
+
+passwordInput.parentElement.style.position="relative";
+
+
+passwordInput.parentElement.appendChild(toggle);
+
+
+
+
+
+toggle.addEventListener("click",()=>{
+
+
+if(passwordInput.type==="password"){
+
+
+passwordInput.type="text";
+
+toggle.innerHTML="🙈";
+
+
+}
+
+else{
+
+
+passwordInput.type="password";
+
+toggle.innerHTML="👁";
+
+
+}
+
+
+
+});
+
+
+}
+
+
+
+
+
+
+/* =========================
+   LOGIN BUTTON CLICK EFFECT
+========================= */
+
+
+const loginBtn =
+document.querySelector(".auth-btn");
+
+
+
+if(loginBtn){
+
+
+loginBtn.addEventListener("click",()=>{
+
+
+loginBtn.innerHTML="Logging in...";
+
+
+});
+
+
+}

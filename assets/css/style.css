@@ -881,3 +881,530 @@ body{
 
 
 }
+
+/* =========================
+   LOGIN PAGE
+========================= */
+
+
+.auth-section{
+
+    min-height:100vh;
+
+    background:
+
+    linear-gradient(
+        120deg,
+         #0c084b,
+         #078da5,
+         #2a033a
+    );
+
+    display:flex;
+
+    align-items:center;
+
+    overflow:hidden;
+
+    position:relative;
+
+    padding:80px 0;
+
+}
+
+
+
+
+.auth-section::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:350px;
+
+    height:350px;
+
+    background:rgba(255,255,255,0.15);
+
+    border-radius:50%;
+
+    top:-120px;
+
+    right:-100px;
+
+    animation:authFloat 8s infinite alternate;
+
+}
+
+
+
+
+.auth-section::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:250px;
+
+    height:250px;
+
+    background:rgba(255,255,255,0.1);
+
+    border-radius:50%;
+
+    bottom:-80px;
+
+    left:-80px;
+
+    animation:authFloat 10s infinite alternate;
+
+}
+
+
+
+
+@keyframes authFloat{
+
+    from{
+
+        transform:translateY(0);
+
+    }
+
+    to{
+
+        transform:translateY(50px);
+
+    }
+
+}
+
+
+
+
+
+/* LEFT CONTENT */
+
+
+.auth-left{
+
+    color:white;
+
+    position:relative;
+
+    z-index:2;
+
+    animation:authFade 1s ease;
+
+}
+
+
+
+
+.auth-left h1{
+
+    font-size:55px;
+
+    font-weight:800;
+
+    line-height:1.2;
+
+}
+
+
+
+
+.auth-left h1 span{
+
+    background:
+
+    linear-gradient(
+        90deg,
+        #ffffff,
+        #00ffff
+    );
+
+
+    -webkit-background-clip:text;
+
+    color:transparent;
+
+}
+
+
+
+
+.auth-left p{
+
+    font-size:18px;
+
+    line-height:1.7;
+
+    max-width:550px;
+
+    margin:25px 0;
+
+    color:#f1f1f1;
+
+}
+
+
+
+
+.auth-points div{
+
+    margin:18px 0;
+
+    font-size:18px;
+
+}
+
+
+
+
+
+/* LOGIN CARD */
+
+
+.auth-card{
+
+
+    background:
+
+    rgba(255,255,255,0.18);
+
+
+    backdrop-filter:blur(20px);
+
+
+    border:
+
+    1px solid rgba(255,255,255,0.3);
+
+
+    border-radius:30px;
+
+
+    padding:45px;
+
+
+    color:white;
+
+
+    box-shadow:
+
+    0 25px 60px rgba(0,0,0,.2);
+
+
+    animation:cardAppear 1s ease;
+
+}
+
+
+
+
+
+.auth-card h2{
+
+    font-size:35px;
+
+    font-weight:700;
+
+    margin-bottom:5px;
+
+}
+
+
+
+
+.auth-subtitle{
+
+    color:#eeeeee;
+
+    margin-bottom:30px;
+
+}
+
+
+
+
+
+/* INPUT */
+
+
+.input-group-custom{
+
+    margin-bottom:20px;
+
+}
+
+
+
+.input-group-custom label{
+
+    display:block;
+
+    margin-bottom:8px;
+
+    font-weight:500;
+
+}
+
+
+
+
+.input-group-custom input{
+
+
+    width:100%;
+
+
+    padding:14px 18px;
+
+
+    border:none;
+
+
+    outline:none;
+
+
+    border-radius:15px;
+
+
+    background:white;
+
+
+    color:#333;
+
+
+    font-size:15px;
+
+
+    transition:.3s;
+
+}
+
+
+
+
+.input-group-custom input:focus{
+
+
+    box-shadow:
+
+    0 0 0 4px rgba(0,198,255,.3);
+
+
+}
+
+
+
+
+
+
+
+/* REMEMBER */
+
+
+.remember{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin:20px 0;
+
+    font-size:14px;
+
+}
+
+
+
+.remember a{
+
+    color:white;
+
+    text-decoration:none;
+
+}
+
+
+
+
+/* BUTTON */
+
+
+.auth-btn{
+
+
+    width:100%;
+
+
+    border:none;
+
+
+    padding:15px;
+
+
+    border-radius:30px;
+
+
+    background:white;
+
+
+    color:#764ba2;
+
+
+    font-size:17px;
+
+
+    font-weight:700;
+
+
+    cursor:pointer;
+
+
+    transition:.4s;
+
+}
+
+
+
+
+.auth-btn:hover{
+
+
+    transform:translateY(-5px);
+
+
+    box-shadow:
+
+    0 15px 30px rgba(0,0,0,.25);
+
+
+}
+
+
+
+
+
+/* REGISTER LINK */
+
+
+.register-text{
+
+
+    text-align:center;
+
+    margin-top:25px;
+
+}
+
+
+
+.register-text a{
+
+    color:#00ffff;
+
+    text-decoration:none;
+
+    font-weight:600;
+
+}
+
+
+
+
+
+
+/* ANIMATION */
+
+
+@keyframes authFade{
+
+
+    from{
+
+        opacity:0;
+
+        transform:translateX(-40px);
+
+    }
+
+
+    to{
+
+        opacity:1;
+
+        transform:translateX(0);
+
+    }
+
+}
+
+
+
+
+@keyframes cardAppear{
+
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(40px);
+
+    }
+
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+
+
+
+
+
+
+/* MOBILE */
+
+
+@media(max-width:991px){
+
+
+.auth-left{
+
+    text-align:center;
+
+    margin-bottom:40px;
+
+}
+
+
+
+.auth-left h1{
+
+    font-size:40px;
+
+}
+
+
+.auth-card{
+
+    padding:30px;
+
+}
+
+
+}
