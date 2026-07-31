@@ -86,7 +86,10 @@ Access your account
 
 
 
-<form action="auth/login_process.php" method="POST">
+<form 
+id="loginForm"
+action="auth/login_process.php" 
+method="POST">
 
 
 <div class="input-group-custom">
@@ -119,12 +122,14 @@ Password
 </label>
 
 
+
 <input 
 type="password"
 name="password"
 placeholder="Enter your password"
 required
 >
+
 
 
 </div>
@@ -158,6 +163,7 @@ Forgot Password?
 
 
 
+<div id="loginMessage"></div>
 
 <button 
 type="submit"

@@ -554,3 +554,152 @@ loginBtn.innerHTML="Logging in...";
 
 
 }
+
+
+
+
+/* =========================
+   LOGIN VALIDATION
+========================= */
+
+
+const loginForm =
+document.getElementById("loginForm");
+
+
+if(loginForm){
+
+
+loginForm.addEventListener("submit",(e)=>{
+
+
+const email =
+document.querySelector(
+'input[name="email"]'
+).value.trim();
+
+
+
+const password =
+document.querySelector(
+'input[name="password"]'
+).value.trim();
+
+
+
+const message =
+document.getElementById("loginMessage");
+
+
+
+message.innerHTML="";
+
+
+
+if(email===""){
+
+
+e.preventDefault();
+
+
+message.innerHTML=
+
+`
+<div class="error-message">
+
+Please enter your email.
+
+</div>
+`;
+
+return;
+
+
+}
+
+
+
+
+const emailPattern =
+/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+
+
+if(!emailPattern.test(email)){
+
+
+e.preventDefault();
+
+
+message.innerHTML=
+
+`
+<div class="error-message">
+
+Please enter a valid email address.
+
+</div>
+`;
+
+return;
+
+
+}
+
+
+
+
+
+if(password===""){
+
+
+e.preventDefault();
+
+
+message.innerHTML=
+
+`
+<div class="error-message">
+
+Please enter your password.
+
+</div>
+`;
+
+return;
+
+
+}
+
+
+
+
+if(password.length < 6){
+
+
+e.preventDefault();
+
+
+message.innerHTML=
+
+`
+<div class="error-message">
+
+Password must be at least 6 characters.
+
+</div>
+`;
+
+return;
+
+
+}
+
+
+
+
+});
+
+
+
+}
