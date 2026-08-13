@@ -179,10 +179,7 @@ include "includes/navbar.php";
                             Login
 
                         </button>
-
-
-
-
+                        
                         <p class="register-text">
 
                             Don't have an account?

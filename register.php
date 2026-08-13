@@ -236,7 +236,7 @@ include "includes/navbar.php";
                                 <input
                                     class="password-field"
                                     type="password"
-                                    name="confirm password"
+                                    name="confirm_password"
                                     placeholder="Confirm your password"
                                     required>
 
