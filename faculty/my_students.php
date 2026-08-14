@@ -12,6 +12,7 @@ $faculty_id = $_SESSION['user_id'];
 $sql = "SELECT 
             m.mentorship_id, 
             m.assigned_date, 
+            i.idea_id,
             i.title AS idea_title, 
             i.category AS idea_category, 
             u.name AS student_name, 
@@ -63,6 +64,7 @@ $result = $stmt->get_result();
             border-radius: 12px;
         }
         .text-cyan { color: #06b6d4 !important; }
+        .hover-underline:hover { text-decoration: underline !important; }
         
         @media (max-width: 768px) {
             .dashboard-wrapper { flex-direction: column; }
@@ -93,7 +95,12 @@ $result = $stmt->get_result();
                             
                             <div class="mt-3">
                                 <span class="text-white-50 small">Approved Project:</span>
-                                <div class="fw-semibold text-cyan"><?php echo htmlspecialchars($row['idea_title']); ?></div>
+                                <!-- Clickable Idea Link -->
+                                <div class="fw-semibold text-cyan">
+                                    <a href="idea_details.php?id=<?php echo $row['idea_id']; ?>" class="text-cyan text-decoration-none hover-underline">
+                                        <?php echo htmlspecialchars($row['idea_title']); ?> 🔗
+                                    </a>
+                                </div>
                                 <span class="badge bg-secondary mt-1"><?php echo htmlspecialchars($row['idea_category']); ?></span>
                             </div>
 
