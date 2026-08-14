@@ -8,1591 +8,558 @@
     box-sizing:border-box;
 }
 
-
 html{
     scroll-behavior:smooth;
 }
 
-
 body{
-
     font-family:'Inter','Segoe UI',sans-serif;
-
     color:#1d1d1f;
-
     background:#f7f9ff;
-
     overflow-x:hidden;
-
 }
-
-
 
 /* =========================
    NAVBAR
 ========================= */
 
-
 .navbar{
-
     width:100%;
-
     height:80px;
-
     background:#ffffff !important;
     background-color:#ffffff !important;
     opacity:1 !important;
     backdrop-filter:none !important;
     -webkit-backdrop-filter:none !important;
-
     display:flex;
-
     align-items:center;
-
     position:fixed;
-
     top:0;
-
     left:0;
-
     z-index:1000;
-
     box-shadow:0 5px 25px rgba(0,0,0,0.08);
-
     transition:none !important;
-
 }
-
-
-
 
 .brand{
-
     display:flex;
-
     align-items:center;
-
     gap:12px;
-
     text-decoration:none;
-
     color:#000000;
-
     font-size:23px;
-
     font-weight:700;
-
 }
-
-
 
 .brand img{
-
     width:48px;
-
     height:48px;
-
     object-fit:contain;
-
 }
-
-
-
 
 .nav-links{
-
     margin-left:auto;
-
     display:flex;
-
     align-items:center;
-
     gap:30px;
-
 }
-
-
 
 .nav-links a{
-
     text-decoration:none;
-
     color:#000000;
-
     font-weight:500;
-
     font-size:16px;
-
     padding:10px 18px;
-
     transition:.3s;
-
 }
-
-
 
 .nav-links a:hover{
-
     color:#13ebff;
-
 }
 
-
-
-
+/* HAMBURGER BUTTON (MOBILE SIDEBAR TOGGLE) */
+.hamburger{
+    display:none;
+    background:none;
+    border:none;
+    font-size:30px;
+    color:#000;
+    cursor:pointer;
+    margin-left:auto;
+    padding:5px 10px;
+    z-index:1001;
+}
 
 .login-btn,
 .register-btn{
-
     text-decoration:none;
-
     color:white!important;
-
     font-weight:600;
-
     padding:12px 26px;
-
     border-radius:30px;
-
     transition:.3s;
-
     display:inline-block;
-
+    text-align:center;
 }
-
-
-
-
 
 .login-btn{
-
-    background:
-    linear-gradient(135deg,#00c6ff,#0066ff);
-
+    background: linear-gradient(135deg,#00c6ff,#0066ff);
 }
-
-
 
 .register-btn{
-
-    background:
-    linear-gradient(135deg,#667eea,#764ba2);
-
+    background: linear-gradient(135deg,#667eea,#764ba2);
 }
-
-
 
 .login-btn:hover,
 .register-btn:hover{
-
     transform:translateY(-3px);
-
 }
-
-
-
-
-
 
 /* =========================
    HERO SECTION
 ========================= */
 
-
 .hero{
-
-    min-height:90vh;
-
-    padding-top:80px;
-
+    min-height:100vh;
+    padding-top:130px; /* OVERLAP FIX: Added clearance for fixed navbar */
+    padding-bottom:60px;
     display:flex;
-
     align-items:center;
-
     position:relative;
-
     overflow:hidden;
-
-
     font-family:'Times New Roman','Segoe UI',sans-serif;
-
-
-    background:
-
-    linear-gradient(
-    120deg,
-    #0c084b,
-    #078da5,
-    #2a033a
-    );
-
-
+    background: linear-gradient(120deg, #0c084b, #078da5, #2a033a);
     color:white;
-
 }
-
-
-
 
 .hero::before{
-
     content:"";
-
     position:absolute;
-
     width:400px;
-
     height:400px;
-
-
-    background:
-    rgba(255,255,255,.15);
-
-
+    background: rgba(255,255,255,.15);
     border-radius:50%;
-
-
     top:-150px;
-
     right:-100px;
-
-
-    animation:
-    moveCircle 8s infinite alternate;
-
+    animation: moveCircle 8s infinite alternate;
 }
-
-
-
 
 .hero::after{
-
     content:"";
-
-
     position:absolute;
-
-
     width:300px;
-
     height:300px;
-
-
-    background:
-    rgba(255,255,255,.1);
-
-
+    background: rgba(255,255,255,.1);
     border-radius:50%;
-
-
     bottom:-100px;
-
-
     left:-80px;
-
-
-    animation:
-    moveCircle 10s infinite alternate;
-
+    animation: moveCircle 10s infinite alternate;
 }
-
-
-
-
 
 @keyframes moveCircle{
-
-    from{
-
-        transform:translateY(0);
-
-    }
-
-
-    to{
-
-        transform:translateY(40px);
-
-    }
-
+    from{ transform:translateY(0); }
+    to{ transform:translateY(40px); }
 }
-
-
-
-
 
 .hero-left{
-
     z-index:2;
-
 }
-
-
-
 
 .hero h1{
-
     font-size:65px;
-
     line-height:1.15;
-
     font-weight:800;
-
     animation:fadeUp 1s ease;
-
 }
-
-
-
 
 .hero h1 span{
-
-
-    background:
-
-    linear-gradient(
-    90deg,
-    #ffffff,
-    #00ffff
-    );
-
-
+    background: linear-gradient(90deg, #ffffff, #00ffff);
     background-clip:text;
-
     -webkit-background-clip:text;
-
     -webkit-text-fill-color:transparent;
-
 }
-
-
-
-
 
 .hero p{
-
-
     font-size:19px;
-
     line-height:1.7;
-
-
     max-width:600px;
-
-
     margin:25px 0;
-
-
     color:#f2f2f2;
-
-
     animation:fadeUp 1.2s ease;
-
 }
 
-
-
-
 @keyframes fadeUp{
-
     from{
-
         opacity:0;
-
         transform:translateY(40px);
-
     }
-
-
     to{
-
         opacity:1;
-
         transform:translateY(0);
-
     }
-
 }
 
 /* =========================
    BUTTONS
 ========================= */
 
+.hero-btn{
+    display:flex;
+    gap:15px;
+    flex-wrap:wrap;
+}
 
 .btn{
-
     padding:14px 35px;
-
     border-radius:40px;
-
     font-weight:600;
-
     text-decoration:none;
-
     display:inline-block;
-
     position:relative;
-
     overflow:hidden;
-
+    text-align:center;
 }
-
-
-
 
 .primary-btn{
-
     background:white;
-
     color:#764ba2;
-
     transition:.3s;
-
 }
-
-
 
 .primary-btn:hover{
-
     transform:translateY(-5px);
-
-    box-shadow:
-    0 15px 30px rgba(0,0,0,.2);
-
+    box-shadow: 0 15px 30px rgba(0,0,0,.2);
 }
-
-
-
-
 
 .secondary-btn{
-
     color:white;
-
     border:2px solid white;
-
-    margin-left:15px;
-
     transition:.3s;
-
 }
-
-
-
 
 .secondary-btn:hover{
-
     background:white;
-
     color:#764ba2;
-
 }
-
-
-
-
-
 
 /* =========================
    HERO CARD
 ========================= */
 
-
 .hero-card{
-
-
-    background:
-
-    rgba(255,255,255,.18);
-
-
+    background: rgba(255,255,255,.18);
     backdrop-filter:blur(20px);
-
-
-    border:
-
-    1px solid rgba(255,255,255,.3);
-
-
+    -webkit-backdrop-filter:blur(20px);
+    border: 1px solid rgba(255,255,255,.3);
     padding:40px 30px;
-
-
     border-radius:30px;
-
-
     text-align:center;
-
-
     animation:floating 5s infinite ease-in-out;
-
-
-    box-shadow:
-
-    0 25px 50px rgba(0,0,0,.15);
-
+    box-shadow: 0 25px 50px rgba(0,0,0,.15);
 }
-
-
 
 .hero-card .icon{
-
     font-size:60px;
-
 }
-
-
 
 .hero-card h3{
-
     font-size:26px;
-
     margin:20px 0;
-
 }
-
-
 
 .hero-card p{
-
     color:white;
-
 }
-
-
-
 
 .mini-box{
-
     background:white;
-
     color:#764ba2;
-
     padding:15px;
-
     border-radius:15px;
-
     margin-top:25px;
-
     font-weight:600;
-
 }
-
-
-
-
 
 @keyframes floating{
-
-    50%{
-
-        transform:translateY(-18px);
-
-    }
-
+    50%{ transform:translateY(-18px); }
 }
-
-
-
-
 
 /* =========================
    FEATURES
 ========================= */
 
-
 .features{
-
     padding:90px 0;
-
     background:#f7f9ff;
-
 }
-
-
 
 .features h2,
 .workflow h2{
-
     text-align:center;
-
     font-size:42px;
-
     font-weight:800;
-
     color:#222;
-
     margin-bottom:50px;
-
 }
-
-
-
 
 .feature-card{
-
-
     background:white;
-
-
     padding:35px 30px;
-
-
     border-radius:25px;
-
-
     height:100%;
-
-
-    box-shadow:
-
-    0 15px 40px rgba(0,0,0,.08);
-
-
+    box-shadow: 0 15px 40px rgba(0,0,0,.08);
     transition:.4s;
-
-
 }
-
-
-
-
 
 .feature-card:hover{
-
-
     transform:translateY(-10px);
-
-
-    box-shadow:
-
-    0 25px 60px rgba(42,216,201,.3);
-
-
+    box-shadow: 0 25px 60px rgba(42,216,201,.3);
 }
-
-
-
 
 .feature-card h3{
-
     color:#764ba2;
-
     margin-bottom:15px;
-
 }
-
-
-
-
 
 /* =========================
    WORKFLOW
 ========================= */
 
-
 .workflow{
-
     padding:80px 0;
-
     background:white;
-
 }
-
-
-
 
 .steps{
-
     display:flex;
-
     justify-content:center;
-
     gap:50px;
-
     flex-wrap:wrap;
-
 }
-
-
-
-
 
 .steps div{
-
     text-align:center;
-
     font-weight:600;
-
 }
-
-
-
 
 .steps span{
-
-
     display:flex;
-
     align-items:center;
-
     justify-content:center;
-
-
     width:75px;
-
     height:75px;
-
-
     margin:auto auto 15px;
-
-
     border-radius:50%;
-
-
     color:white;
-
-
     font-size:28px;
-
-
-    background:
-
-    linear-gradient(
-    135deg,
-    #667eea,
-    #00c6ff
-    );
-
-
+    background: linear-gradient(135deg,#667eea,#00c6ff);
 }
-
-
-
-
 
 /* =========================
    FOOTER
 ========================= */
 
-
 .footer{
-
     background:#111827;
-
     color:white;
-
     padding:25px;
-
     text-align:center;
-
 }
-
-
-
-
-
-
-
-
 
 /* =========================
-   LOGIN PAGE
+   LOGIN & REGISTER PAGES
 ========================= */
 
-
 .auth-section{
-
-
     min-height:calc(100vh - 80px);
-
-
     margin-top:80px;
-
-
-    background:
-
-    linear-gradient(
-    120deg,
-    #0c084b,
-    #078da5,
-    #2a033a
-    );
-
-
+    background: linear-gradient(120deg, #0c084b, #078da5, #2a033a);
     display:flex;
-
-
     align-items:center;
-
-
     overflow:hidden;
-
-
     position:relative;
-
-
     padding:40px 0;
-
-
 }
-
-
-
-
 
 .auth-section::before{
-
-
     content:"";
-
-
     position:absolute;
-
-
     width:350px;
-
-
     height:350px;
-
-
     background:rgba(255,255,255,.15);
-
-
     border-radius:50%;
-
-
     top:-120px;
-
-
     right:-100px;
-
-
     animation:authFloat 8s infinite alternate;
-
-
 }
-
-
-
-
 
 .auth-section::after{
-
-
     content:"";
-
-
     position:absolute;
-
-
     width:250px;
-
-
     height:250px;
-
-
     background:rgba(255,255,255,.1);
-
-
     border-radius:50%;
-
-
     bottom:-80px;
-
-
     left:-80px;
-
-
     animation:authFloat 10s infinite alternate;
-
-
 }
-
-
-
-
 
 @keyframes authFloat{
-
-
-    from{
-
-        transform:translateY(0);
-
-    }
-
-
-    to{
-
-        transform:translateY(40px);
-
-    }
-
+    from{ transform:translateY(0); }
+    to{ transform:translateY(40px); }
 }
-
-
-
-
-
 
 .auth-left{
-
     color:white;
-
     position:relative;
-
     z-index:2;
-
 }
-
-
 
 .auth-left h1{
-
-
     font-size:45px;
-
-
     font-weight:800;
-
-
     line-height:1.2;
-
-
 }
-
-
-
 
 .auth-left h1 span{
-
-
-    background:
-
-    linear-gradient(
-    90deg,
-    #ffffff,
-    #00ffff
-    );
-
-
+    background: linear-gradient(90deg,#ffffff,#00ffff);
     -webkit-background-clip:text;
-
-
     -webkit-text-fill-color:transparent;
-
 }
-
-
-
-
 
 .auth-left p{
-
-
     font-size:16px;
-
-
     line-height:1.6;
-
-
     max-width:500px;
-
-
     margin:20px 0;
-
-
 }
-
-
-
-
 
 .auth-points div{
-
-
     margin:15px 0;
-
-
     font-size:17px;
-
-
 }
-
-
-
-
-
-
-/* LOGIN CARD */
-
 
 .auth-card{
-
-
-    background:
-
-    rgba(255,255,255,.18);
-
-
+    background: rgba(255,255,255,.18);
     backdrop-filter:blur(20px);
-
-
-    border:
-
-    1px solid rgba(255,255,255,.3);
-
-
+    -webkit-backdrop-filter:blur(20px);
+    border: 1px solid rgba(255,255,255,.3);
     border-radius:25px;
-
-
     padding:35px;
-
-
     color:white;
-
-
     max-width:420px;
-
-
     margin:auto;
-
-
-    box-shadow:
-
-    0 25px 60px rgba(0,0,0,.2);
-
-
+    box-shadow: 0 25px 60px rgba(0,0,0,.2);
     animation:cardAppear 1s ease;
-
-
 }
 
-
-
-
-
-
-
-.auth-card h2{
-
-
-    font-size:32px;
-
-
-}
-
-
-
-
-
-.auth-subtitle{
-
-
-    color:#eee;
-
-
-    margin-bottom:25px;
-
-
-}
-
-
-
-
-
-
-.input-group-custom{
-
-
-    margin-bottom:18px;
-
-
-}
-
-
-
-.input-group-custom label{
-
-
-    display:block;
-
-
-    margin-bottom:7px;
-
-
-}
-
-
-
+.auth-card h2{ font-size:32px; }
+.auth-subtitle{ color:#eee; margin-bottom:25px; }
+.input-group-custom{ margin-bottom:18px; }
+.input-group-custom label{ display:block; margin-bottom:7px; }
 
 .input-group-custom input{
-
-
     width:100%;
-
-
     padding:12px 18px;
-
-
     border:none;
-
-
     outline:none;
-
-
     border-radius:14px;
-
-
 }
-
-
-
-
 
 .input-group-custom input:focus{
-
-
-    box-shadow:
-
-    0 0 0 4px rgba(0,198,255,.3);
-
-
+    box-shadow: 0 0 0 4px rgba(0,198,255,.3);
 }
-
-
-
-
-
-
 
 .remember{
-
-
     display:flex;
-
-
     justify-content:space-between;
-
-
     align-items:center;
-
-
     margin:18px 0;
-
-
     font-size:14px;
-
-
 }
 
-
-
-
-
-.remember a{
-
-
-    color:white;
-
-
-}
-
-
-
-
-
+.remember a{ color:white; }
 
 .auth-btn{
-
-
     width:100%;
-
-
     padding:13px;
-
-
     border:none;
-
-
     border-radius:30px;
-
-
     background:white;
-
-
     color:#764ba2;
-
-
     font-weight:700;
-
-
     font-size:16px;
-
-
     cursor:pointer;
-
-
     transition:.3s;
-
-
 }
 
-
-
-
-.auth-btn:hover{
-
-
-    transform:translateY(-4px);
-
-
-}
-
-
-
-
-
-
-
-.register-text{
-
-
-    text-align:center;
-
-
-    margin-top:20px;
-
-
-}
-
-
-
-
-.register-text a{
-
-
-    color:#00ffff;
-
-
-}
-
-
-
-
-
+.auth-btn:hover{ transform:translateY(-4px); }
+.register-text{ text-align:center; margin-top:20px; }
+.register-text a{ color:#00ffff; }
 
 @keyframes cardAppear{
-
-
-    from{
-
-        opacity:0;
-
-        transform:translateY(30px);
-
-    }
-
-
-    to{
-
-        opacity:1;
-
-        transform:translateY(0);
-
-    }
-
+    from{ opacity:0; transform:translateY(30px); }
+    to{ opacity:1; transform:translateY(0); }
 }
 
-
-
-
-
-
-/* =========================
-   RESPONSIVE
-========================= */
-
-
-@media(max-width:991px){
-
-
-.hero h1{
-
-    font-size:42px;
-
-}
-
-
-
-.auth-section{
-
-
-    padding:35px 15px;
-
-
-}
-
-
-
-.auth-left{
-
-
-    text-align:center;
-
-
-    margin-bottom:25px;
-
-
-}
-
-
-
-.auth-left h1{
-
-
-    font-size:35px;
-
-
-}
-
-
-
-.auth-card{
-
-
-    padding:25px;
-
-
-}
-
-
-}
-
-
-
-
-@media(max-width:768px){
-
-
-.nav-links{
-
-    display:none;
-
-}
-
-
-
-.secondary-btn{
-
-
-    margin-left:0;
-
-
-    margin-top:15px;
-
-
-}
-
-
-
-.features h2,
-.workflow h2{
-
-
-    font-size:32px;
-
-
-}
-
-
-
-}
-
-/* =========================
-   LOGIN MESSAGE
-========================= */
-
-
-#loginMessage{
-
+#loginMessage, #registerMessage{
     margin-bottom:20px;
-
     text-align:center;
-
     font-size:14px;
-
     font-weight:600;
-
 }
 
-
-
-.error-message{
-
+.error-message, .register-error{
     background:rgba(255,0,0,.15);
-
     color:#ffdddd;
-
     padding:12px;
-
     border-radius:12px;
-
 }
 
-
-
-.success-message{
-
+.success-message, .register-success{
     background:rgba(0,255,150,.15);
-
     color:#dffff0;
-
     padding:12px;
-
     border-radius:12px;
-
 }
 
-/* =========================
-   REGISTER PAGE
-========================= */
-
-
-.register-card{
-
-    max-width:450px;
-
-}
-
-
+.register-card{ max-width:450px; }
 
 .register-select{
-
     width:100%;
-
     padding:12px 18px;
-
     border:none;
-
     outline:none;
-
     border-radius:14px;
-
     font-size:15px;
-
     background:white;
-
     color:#333;
-
 }
-
-
 
 .register-select:focus{
-
-    box-shadow:
-
-    0 0 0 4px rgba(0,198,255,.3);
-
+    box-shadow: 0 0 0 4px rgba(0,198,255,.3);
 }
 
-/* =========================
-   REGISTER MESSAGE
-========================= */
-
-
-#registerMessage{
-
-    margin-bottom:20px;
-
-    text-align:center;
-
-    font-size:14px;
-
-    font-weight:600;
-
-}
-
-
-.register-error{
-
-    background:rgba(255,0,0,.15);
-
-    color:#ffe0e0;
-
-    padding:12px;
-
-    border-radius:12px;
-
-}
-
-
-
-.register-success{
-
-    background:rgba(0,255,150,.15);
-
-    color:#dffff0;
-
-    padding:12px;
-
-    border-radius:12px;
-
-
-}
-
-   /* =========================
- PASSWORD SHOW HIDE
-========================= */
-
-
-.password-wrapper{
-
-    position:relative;
-    width:100%;
-
-}
-
-
-.password-wrapper .password-field{
-
-    width:100%;
-    padding-right:55px !important;
-
-}
-
-
+.password-wrapper{ position:relative; width:100%; }
+.password-wrapper .password-field{ width:100%; padding-right:55px !important; }
 
 .toggle-password{
-
     position:absolute;
-
     right:15px;
-
     top:50%;
-
     transform:translateY(-50%);
-
-
     background:none;
-
     border:none;
-
     cursor:pointer;
-
-
     font-size:18px;
-
     z-index:10;
-
 }
 
 /* ==========================================
    STUDENT & FACULTY DASHBOARD STYLES
 ========================================== */
 
-/* Dark Dashboard Container */
 body.dashboard-body {
     background-color: #0f172a;
     color: #f8fafc;
@@ -1600,7 +567,6 @@ body.dashboard-body {
     font-family: 'Poppins', sans-serif;
 }
 
-/* Fixed Sidebar Styling */
 .sidebar {
     width: 250px;
     top: 0;
@@ -1609,6 +575,7 @@ body.dashboard-body {
     z-index: 1000;
     background: rgba(15, 23, 42, 0.95) !important;
     backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border-right: 1px solid rgba(255, 255, 255, 0.1);
 }
 
@@ -1626,17 +593,16 @@ body.dashboard-body {
     box-shadow: 0 4px 15px rgba(6, 182, 212, 0.3);
 }
 
-/* Main Dashboard Offset */
 .main-content {
     margin-left: 250px;
     padding: 30px;
     min-height: 100vh;
 }
 
-/* Glassmorphic Stat Cards */
 .card.bg-dark {
     background: rgba(30, 41, 59, 0.7) !important;
     backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.08) !important;
     border-radius: 12px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -1647,10 +613,7 @@ body.dashboard-body {
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
 }
 
-/* Dashboard Table Customization */
-.table-dark {
-    background-color: transparent !important;
-}
+.table-dark { background-color: transparent !important; }
 
 .table-dark th {
     color: #94a3b8;
@@ -1665,17 +628,87 @@ body.dashboard-body {
     border-color: rgba(255, 255, 255, 0.05);
 }
 
-/* Text Highlights */
-.text-cyan {
-    color: #06b6d4 !important;
+.text-cyan { color: #06b6d4 !important; }
+
+/* ==========================================================================
+   MOBILE RESPONSIVE & SIDEBAR MENU FIXES
+   ========================================================================== */
+
+@media(max-width:991px){
+    .hero h1{ font-size:42px; }
+    .auth-section{ padding:35px 15px; }
+    .auth-left{ text-align:center; margin-bottom:25px; }
+    .auth-left h1{ font-size:35px; }
+    .auth-card{ padding:25px; }
 }
 
-/* Responsive Mobile Sidebar */
-@media (max-width: 768px) {
+@media(max-width:768px){
+    /* 1. Mobile Menu / Sidebar Styling */
+    .hamburger {
+        display: block; /* Show menu toggle button on mobile */
+    }
+
+    .nav-links {
+        display: none; /* Hidden by default on mobile */
+        position: absolute;
+        top: 80px;
+        left: 0;
+        width: 100%;
+        background: #ffffff;
+        flex-direction: column;
+        padding: 20px;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        gap: 15px;
+    }
+
+    .nav-links.show {
+        display: flex !important; /* Visible when toggled via JavaScript */
+    }
+
+    .nav-links a {
+        width: 100%;
+        text-align: center;
+    }
+
+    /* 2. Hero Overlap Fix for Mobile Screen */
+    .hero {
+        padding-top: 130px !important; /* Proper clearance from top header */
+        text-align: center;
+    }
+
+    .hero h1 {
+        font-size: 32px !important;
+        line-height: 1.25 !important;
+    }
+
+    .hero p {
+        font-size: 15px !important;
+        margin: 15px auto !important;
+    }
+
+    .hero-btn {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .secondary-btn {
+        margin-left: 0;
+    }
+
+    .hero-card {
+        margin-top: 35px;
+    }
+
+    .features h2, .workflow h2 {
+        font-size: 30px;
+    }
+
+    /* 3. Dashboard Mobile Layout */
     .main-content {
         margin-left: 0;
         padding: 15px;
     }
+
     .sidebar {
         position: relative !important;
         width: 100% !important;

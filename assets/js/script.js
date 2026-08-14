@@ -6,7 +6,44 @@ window.addEventListener("load", () => {
 });
 
 /* =========================
-   Navbar Scroll Effect
+   Mobile Sidebar / Menu Toggle (NEWLY ADDED)
+========================= */
+document.addEventListener("DOMContentLoaded", () => {
+    const mobileMenuToggle = document.getElementById("mobileMenuToggle");
+    const navLinks = document.getElementById("navLinks");
+
+    if (mobileMenuToggle && navLinks) {
+        mobileMenuToggle.addEventListener("click", (e) => {
+            e.stopPropagation();
+            navLinks.classList.toggle("show");
+            // টগল এর সময় আইকন ☰ থেকে ✖ এ চেঞ্জ করার জন্য
+            if (navLinks.classList.contains("show")) {
+                mobileMenuToggle.textContent = "✕";
+            } else {
+                mobileMenuToggle.textContent = "☰";
+            }
+        });
+
+        // স্ক্রিনের বাইরে ক্লিক করলে মেনু বন্ধ হয়ে যাবে
+        document.addEventListener("click", (e) => {
+            if (!mobileMenuToggle.contains(e.target) && !navLinks.contains(e.target)) {
+                navLinks.classList.remove("show");
+                mobileMenuToggle.textContent = "☰";
+            }
+        });
+
+        // যেকোনো নেভবারে লিংকে ক্লিক করলে মেনু অটো বন্ধ হবে
+        navLinks.querySelectorAll("a").forEach(link => {
+            link.addEventListener("click", () => {
+                navLinks.classList.remove("show");
+                mobileMenuToggle.textContent = "☰";
+            });
+        });
+    }
+});
+
+/* =========================
+   Navbar Dynamic Styling
 ========================= */
 const navbar = document.querySelector(".navbar");
 if (navbar) {
@@ -76,14 +113,16 @@ counters.forEach(counter => {
     let target = parseInt(counter.dataset.target);
     let count = 0;
 
-    let timer = setInterval(() => {
-        count += Math.ceil(target / 80);
-        if (count >= target) {
-            count = target;
-            clearInterval(timer);
-        }
-        counter.innerText = count;
-    }, 30);
+    if (!isNaN(target)) {
+        let timer = setInterval(() => {
+            count += Math.ceil(target / 80);
+            if (count >= target) {
+                count = target;
+                clearInterval(timer);
+            }
+            counter.innerText = count;
+        }, 30);
+    }
 });
 
 /* =========================
@@ -112,7 +151,7 @@ buttons.forEach(button => {
 document.querySelectorAll("a[href^='#']").forEach(link => {
     link.addEventListener("click", (e) => {
         const targetId = link.getAttribute("href");
-        if (targetId !== "#") {
+        if (targetId !== "#" && targetId !== "") {
             const targetElement = document.querySelector(targetId);
             if (targetElement) {
                 e.preventDefault();
@@ -210,42 +249,40 @@ if (loginForm) {
         const email = emailInput.value.trim();
         const password = passwordInput.value.trim();
 
-        message.innerHTML = "";
+        if (message) message.innerHTML = "";
 
         if (email === "") {
             e.preventDefault();
-            message.innerHTML = `<div class="error-message" style="color: #ff4d4d; margin-bottom: 10px;">Please enter your email.</div>`;
+            if (message) message.innerHTML = `<div class="error-message" style="color: #ff4d4d; margin-bottom: 10px;">Please enter your email.</div>`;
             return;
         }
 
         const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailPattern.test(email)) {
             e.preventDefault();
-            message.innerHTML = `<div class="error-message" style="color: #ff4d4d; margin-bottom: 10px;">Please enter a valid email address.</div>`;
+            if (message) message.innerHTML = `<div class="error-message" style="color: #ff4d4d; margin-bottom: 10px;">Please enter a valid email address.</div>`;
             return;
         }
 
         if (password === "") {
             e.preventDefault();
-            message.innerHTML = `<div class="error-message" style="color: #ff4d4d; margin-bottom: 10px;">Please enter your password.</div>`;
+            if (message) message.innerHTML = `<div class="error-message" style="color: #ff4d4d; margin-bottom: 10px;">Please enter your password.</div>`;
             return;
         }
 
         if (password.length < 6) {
             e.preventDefault();
-            message.innerHTML = `<div class="error-message" style="color: #ff4d4d; margin-bottom: 10px;">Password must be at least 6 characters.</div>`;
+            if (message) message.innerHTML = `<div class="error-message" style="color: #ff4d4d; margin-bottom: 10px;">Password must be at least 6 characters.</div>`;
             return;
         }
 
-        // ফর্ম ঠিক থাকলে বাটনের টেক্সট পরিবর্তন ও ডিসেবল
         if (submitBtn) {
             submitBtn.innerText = "Logging in...";
             submitBtn.disabled = true;
         }
     });
 
-    // ব্যাক বাটন বা পেজ ক্যাশ থেকে লোড হলে বাটন ও ফর্ম রিসেট
-    window.addEventListener("pageshow", function (event) {
+    window.addEventListener("pageshow", function () {
         if (submitBtn) {
             submitBtn.innerText = "Login";
             submitBtn.disabled = false;
@@ -270,30 +307,30 @@ if (registerForm) {
         const password = passwordInput ? passwordInput.value.trim() : "";
         const confirmPassword = confirmPasswordInput ? confirmPasswordInput.value.trim() : "";
 
-        message.innerHTML = "";
+        if (message) message.innerHTML = "";
 
         if (name === "") {
             e.preventDefault();
-            message.innerHTML = `<div class="register-error" style="color: #ff4d4d; margin-bottom: 10px;">Please enter your name.</div>`;
+            if (message) message.innerHTML = `<div class="register-error" style="color: #ff4d4d; margin-bottom: 10px;">Please enter your name.</div>`;
             return;
         }
 
         const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailPattern.test(email)) {
             e.preventDefault();
-            message.innerHTML = `<div class="register-error" style="color: #ff4d4d; margin-bottom: 10px;">Enter a valid email.</div>`;
+            if (message) message.innerHTML = `<div class="register-error" style="color: #ff4d4d; margin-bottom: 10px;">Enter a valid email.</div>`;
             return;
         }
 
         if (password.length < 6) {
             e.preventDefault();
-            message.innerHTML = `<div class="register-error" style="color: #ff4d4d; margin-bottom: 10px;">Password must be at least 6 characters.</div>`;
+            if (message) message.innerHTML = `<div class="register-error" style="color: #ff4d4d; margin-bottom: 10px;">Password must be at least 6 characters.</div>`;
             return;
         }
 
         if (password !== confirmPassword) {
             e.preventDefault();
-            message.innerHTML = `<div class="register-error" style="color: #ff4d4d; margin-bottom: 10px;">Passwords do not match.</div>`;
+            if (message) message.innerHTML = `<div class="register-error" style="color: #ff4d4d; margin-bottom: 10px;">Passwords do not match.</div>`;
             return;
         }
     });

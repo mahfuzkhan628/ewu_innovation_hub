@@ -43,7 +43,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
     <hr class="border-secondary my-4">
 
     <!-- Logout Action -->
-    <a href="../logout.php" class="btn btn-outline-danger w-100 d-flex align-items-center justify-content-center gap-2">
+    <a href="../auth/logout.php" class="btn btn-outline-danger w-100 d-flex align-items-center justify-content-center gap-2">
         🚪 <span>Logout</span>
     </a>
 </aside>
