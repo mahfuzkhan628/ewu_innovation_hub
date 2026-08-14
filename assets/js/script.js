@@ -194,11 +194,13 @@ toggleButtons.forEach(button => {
 });
 
 /* =========================
-   LOGIN VALIDATION
+   LOGIN VALIDATION & RESET
 ========================= */
 const loginForm = document.getElementById("loginForm");
 if (loginForm) {
-    loginForm.addEventListener("submit", (e) => {
+    const submitBtn = loginForm.querySelector('button[type="submit"]');
+
+    loginForm.addEventListener("submit", function (e) {
         const emailInput = document.querySelector('input[name="email"]');
         const passwordInput = document.querySelector('input[name="password"]');
         const message = document.getElementById("loginMessage");
@@ -233,6 +235,20 @@ if (loginForm) {
             e.preventDefault();
             message.innerHTML = `<div class="error-message" style="color: #ff4d4d; margin-bottom: 10px;">Password must be at least 6 characters.</div>`;
             return;
+        }
+
+        // ফর্ম ঠিক থাকলে বাটনের টেক্সট পরিবর্তন ও ডিসেবল
+        if (submitBtn) {
+            submitBtn.innerText = "Logging in...";
+            submitBtn.disabled = true;
+        }
+    });
+
+    // ব্যাক বাটন বা পেজ ক্যাশ থেকে লোড হলে বাটন ও ফর্ম রিসেট
+    window.addEventListener("pageshow", function (event) {
+        if (submitBtn) {
+            submitBtn.innerText = "Login";
+            submitBtn.disabled = false;
         }
     });
 }

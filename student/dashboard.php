@@ -1,34 +1,58 @@
 <?php
-// Include session check & database connection
+// Include session check and database configuration
 include "../includes/session.php";
 include "../config/database.php";
 
-// Fetch Student Specific Stats
+// Retrieve currently logged-in student's user ID from session
 $student_id = $_SESSION['user_id'];
 
-// 1. Total Ideas Submitted
-$total_stmt = $conn->prepare("SELECT COUNT(*) AS total FROM ideas WHERE student_id = ?");
-$total_stmt->bind_param("i", $student_id);
-$total_stmt->execute();
-$total_ideas = $total_stmt->get_result()->fetch_assoc()['total'];
+/* 
+   ========================================================================
+   SQL STATISTICAL QUERIES FOR STUDENT DASHBOARD
+   ========================================================================
+*/
 
-// 2. Pending Ideas
-$pending_stmt = $conn->prepare("SELECT COUNT(*) AS pending FROM ideas WHERE student_id = ? AND status = 'pending'");
-$pending_stmt->bind_param("i", $student_id);
-$pending_stmt->execute();
-$pending_ideas = $pending_stmt->get_result()->fetch_assoc()['pending'];
+// SQL Query 1: Count total ideas submitted by the logged-in student
+$sql_total = "SELECT COUNT(*) AS total FROM ideas WHERE student_id = ?";
+$stmt_total = $conn->prepare($sql_total);
+$stmt_total->bind_param("i", $student_id);
+$stmt_total->execute();
+$total_ideas = $stmt_total->get_result()->fetch_assoc()['total'] ?? 0;
+$stmt_total->close();
 
-// 3. Approved Ideas
-$approved_stmt = $conn->prepare("SELECT COUNT(*) AS approved FROM ideas WHERE student_id = ? AND status = 'approved'");
-$approved_stmt->bind_param("i", $student_id);
-$approved_stmt->execute();
-$approved_ideas = $approved_stmt->get_result()->fetch_assoc()['approved'];
+// SQL Query 2: Count pending ideas submitted by the student
+$sql_pending = "SELECT COUNT(*) AS pending FROM ideas WHERE student_id = ? AND status = 'pending'";
+$stmt_pending = $conn->prepare($sql_pending);
+$stmt_pending->bind_param("i", $student_id);
+$stmt_pending->execute();
+$pending_ideas = $stmt_pending->get_result()->fetch_assoc()['pending'] ?? 0;
+$stmt_pending->close();
 
-// Fetch Recent 5 Submitted Ideas (FIXED: category Spelling Here!)
-$recent_stmt = $conn->prepare("SELECT idea_id, title, category, status, submitted_at FROM ideas WHERE student_id = ? ORDER BY submitted_at DESC LIMIT 5");
-$recent_stmt->bind_param("i", $student_id);
-$recent_stmt->execute();
-$recent_ideas = $recent_stmt->get_result();
+// SQL Query 3: Count approved ideas submitted by the student
+$sql_approved = "SELECT COUNT(*) AS approved FROM ideas WHERE student_id = ? AND status = 'approved'";
+$stmt_approved = $conn->prepare($sql_approved);
+$stmt_approved->bind_param("i", $student_id);
+$stmt_approved->execute();
+$approved_ideas = $stmt_approved->get_result()->fetch_assoc()['approved'] ?? 0;
+$stmt_approved->close();
+
+// SQL Query 4: Count total mentorship connections for this student
+$sql_mentors = "SELECT COUNT(*) AS mentors FROM mentorship WHERE student_id = ?";
+$stmt_mentors = $conn->prepare($sql_mentors);
+$stmt_mentors->bind_param("i", $student_id);
+$stmt_mentors->execute();
+$total_mentors = $stmt_mentors->get_result()->fetch_assoc()['mentors'] ?? 0;
+$stmt_mentors->close();
+
+/* 
+   SQL Query 5: Fetch latest 5 submitted ideas matching table schema columns
+   (idea_id, title, category, status, submitted_at)
+*/
+$sql_recent = "SELECT idea_id, title, category, status, submitted_at FROM ideas WHERE student_id = ? ORDER BY submitted_at DESC LIMIT 5";
+$stmt_recent = $conn->prepare($sql_recent);
+$stmt_recent->bind_param("i", $student_id);
+$stmt_recent->execute();
+$recent_ideas_result = $stmt_recent->get_result();
 ?>
 
 <!DOCTYPE html>
@@ -37,166 +61,126 @@ $recent_ideas = $recent_stmt->get_result();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Dashboard - EWU Innovation Hub</title>
-    <!-- Bootstrap CSS -->
+    
+    <!-- EWU Logo Favicon -->
+    <link rel="icon" type="image/png" href="../assets/images/ewu_logo.png">
+    
+    <!-- Bootstrap CSS & Stylesheets -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Custom Styles -->
     <link rel="stylesheet" href="../assets/css/style.css">
     
     <style>
-        body {
-            background-color: #0f172a;
-            color: #f8fafc;
-            min-height: 100vh;
-        }
-
-        .sidebar {
-            width: 250px;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            z-index: 1000;
-            background: rgba(15, 23, 42, 0.95) !important;
-            backdrop-filter: blur(12px);
-            border-right: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .main-content {
-            margin-left: 250px;
-            padding: 30px;
-        }
-
+        body { background-color: #0f172a; color: #f8fafc; min-height: 100vh; }
+        .main-content { margin-left: 250px; padding: 30px; }
         .card.bg-dark {
             background: rgba(30, 41, 59, 0.7) !important;
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.08) !important;
             border-radius: 12px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-
-        .card.bg-dark:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-        }
-
-        .text-cyan {
-            color: #06b6d4 !important;
-        }
-
-        @media (max-width: 768px) {
-            .main-content {
-                margin-left: 0;
-                padding: 15px;
-            }
-            .sidebar {
-                position: relative !important;
-                width: 100% !important;
-                height: auto !important;
-            }
-        }
+        .text-cyan { color: #06b6d4 !important; }
+        .table-dark { background-color: transparent !important; }
+        .table-dark td, .table-dark th { border-color: rgba(255, 255, 255, 0.1); }
+        @media (max-width: 768px) { .main-content { margin-left: 0; padding: 15px; } }
     </style>
 </head>
 <body>
 
 <div class="container-fluid">
     <div class="row">
-        <!-- Student Sidebar -->
+        <!-- Student Sidebar Included -->
         <?php include "../includes/student_sidebar.php"; ?>
 
-        <!-- Main Dashboard View Area -->
+        <!-- Dashboard Main Panel -->
         <main class="col-md-9 ms-sm-auto col-lg-10 main-content">
             
-            <!-- Welcome Header -->
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-4 border-bottom border-secondary">
                 <div>
-                    <h1 class="h2 text-cyan">Welcome Back, <?php echo htmlspecialchars($_SESSION['name']); ?>! 👋</h1>
-                    <p class="text-white-50">Department of <?php echo htmlspecialchars($_SESSION['department']); ?></p>
+                    <h1 class="h2 text-cyan">Welcome, <?php echo htmlspecialchars($_SESSION['name'] ?? $_SESSION['full_name'] ?? 'Student'); ?> 👋</h1>
+                    <p class="text-white-50">Manage your innovation projects and mentor interactions.</p>
                 </div>
-                <div class="btn-toolbar mb-2 mb-md-0">
-                    <a href="submit_idea.php" class="btn btn-primary shadow-sm">
-                        🚀 Submit New Idea
+                <a href="submit_idea.php" class="btn btn-primary px-3">💡 Submit New Idea</a>
+            </div>
+
+            <!-- Dashboard Analytics Widgets -->
+            <div class="row g-3 mb-4">
+                <div class="col-md-3">
+                    <div class="card bg-dark text-white p-3 shadow-sm">
+                        <span class="text-white-50 small fw-semibold">Total Ideas</span>
+                        <h2 class="text-cyan mb-0 mt-1"><?php echo $total_ideas; ?></h2>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card bg-dark text-white p-3 shadow-sm">
+                        <span class="text-white-50 small fw-semibold">Pending Review</span>
+                        <h2 class="text-warning mb-0 mt-1"><?php echo $pending_ideas; ?></h2>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card bg-dark text-white p-3 shadow-sm">
+                        <span class="text-white-50 small fw-semibold">Approved Ideas</span>
+                        <h2 class="text-success mb-0 mt-1"><?php echo $approved_ideas; ?></h2>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <a href="mentors.php" class="text-decoration-none">
+                        <div class="card bg-dark text-white p-3 shadow-sm">
+                            <span class="text-white-50 small fw-semibold">Faculty Mentors</span>
+                            <h2 class="text-info mb-0 mt-1"><?php echo $total_mentors; ?></h2>
+                        </div>
                     </a>
                 </div>
             </div>
 
-            <!-- Summary Stats Cards -->
-            <div class="row g-4 mb-4">
-                <div class="col-md-4">
-                    <div class="card bg-dark text-white border-secondary h-100 shadow-sm">
-                        <div class="card-body text-center p-4">
-                            <h5 class="card-title text-white-50 mb-2">Total Ideas Submitted</h5>
-                            <h2 class="display-5 fw-bold text-info"><?php echo $total_ideas; ?></h2>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-4">
-                    <div class="card bg-dark text-white border-secondary h-100 shadow-sm">
-                        <div class="card-body text-center p-4">
-                            <h5 class="card-title text-white-50 mb-2">Pending Review</h5>
-                            <h2 class="display-5 fw-bold text-warning"><?php echo $pending_ideas; ?></h2>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-4">
-                    <div class="card bg-dark text-white border-secondary h-100 shadow-sm">
-                        <div class="card-body text-center p-4">
-                            <h5 class="card-title text-white-50 mb-2">Approved Innovations</h5>
-                            <h2 class="display-5 fw-bold text-success"><?php echo $approved_ideas; ?></h2>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Recent Submissions Table -->
-            <div class="card bg-dark text-white border-secondary shadow-sm">
-                <div class="card-header bg-dark border-secondary d-flex justify-content-between align-items-center">
-                    <h5 class="mb-0">Recent Idea Submissions</h5>
+            <!-- Recent Submissions Overview Table -->
+            <div class="card bg-dark text-white p-4 shadow-sm mb-4">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="text-cyan mb-0">Recent Idea Submissions</h5>
                     <a href="my_ideas.php" class="btn btn-sm btn-outline-info">View All</a>
                 </div>
-                <div class="card-body p-0">
-                    <div class="table-responsive">
-                        <table class="table table-dark table-hover mb-0 align-middle">
-                            <thead class="table-borderless border-bottom border-secondary">
-                                <tr>
-                                    <th>Title</th>
-                                    <th>Category</th>
-                                    <th>Submitted Date</th>
-                                    <th>Status</th>
-                                    <th class="text-end">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php if ($recent_ideas->num_rows > 0): ?>
-                                    <?php while ($idea = $recent_ideas->fetch_assoc()): ?>
-                                        <tr>
-                                            <td class="fw-semibold"><?php echo htmlspecialchars($idea['title']); ?></td>
-                                            <td><span class="badge bg-secondary"><?php echo htmlspecialchars($idea['category']); ?></span></td>
-                                            <td><?php echo date('M d, Y', strtotime($idea['submitted_at'])); ?></td>
-                                            <td>
-                                                <?php if ($idea['status'] == 'pending'): ?>
-                                                    <span class="badge bg-warning text-dark">Pending</span>
-                                                <?php elseif ($idea['status'] == 'approved'): ?>
-                                                    <span class="badge bg-success">Approved</span>
-                                                <?php else: ?>
-                                                    <span class="badge bg-danger">Rejected</span>
-                                                <?php endif; ?>
-                                            </td>
-                                            <td class="text-end">
-                                                <a href="view_idea.php?id=<?php echo $idea['idea_id']; ?>" class="btn btn-sm btn-outline-light">Details</a>
-                                            </td>
-                                        </tr>
-                                    <?php endwhile; ?>
-                                <?php else: ?>
+
+                <div class="table-responsive">
+                    <table class="table table-dark table-hover align-middle mb-0">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Category</th>
+                                <th>Status</th>
+                                <th>Submitted Date</th>
+                                <th class="text-end">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php if ($recent_ideas_result->num_rows > 0): ?>
+                                <?php while ($idea = $recent_ideas_result->fetch_assoc()): ?>
                                     <tr>
-                                        <td colspan="5" class="text-center text-white-50 py-4">
-                                            No ideas submitted yet. Click "Submit New Idea" to get started!
+                                        <td><strong><?php echo htmlspecialchars($idea['title']); ?></strong></td>
+                                        <td><span class="badge bg-secondary"><?php echo htmlspecialchars($idea['category']); ?></span></td>
+                                        <td>
+                                            <?php 
+                                            $status = $idea['status'];
+                                            if ($status == 'approved') {
+                                                echo '<span class="badge bg-success">Approved</span>';
+                                            } elseif ($status == 'rejected') {
+                                                echo '<span class="badge bg-danger">Rejected</span>';
+                                            } else {
+                                                echo '<span class="badge bg-warning text-dark">Pending</span>';
+                                            }
+                                            ?>
+                                        </td>
+                                        <td><?php echo date('M d, Y', strtotime($idea['submitted_at'])); ?></td>
+                                        <td class="text-end">
+                                            <a href="idea_details.php?id=<?php echo $idea['idea_id']; ?>" class="btn btn-sm btn-outline-light">Details</a>
                                         </td>
                                     </tr>
-                                <?php endif; ?>
-                            </tbody>
-                        </table>
-                    </div>
+                                <?php endwhile; ?>
+                            <?php else: ?>
+                                <tr>
+                                    <td colspan="5" class="text-center text-white-50 py-4">No ideas submitted yet. Click "Submit New Idea" to get started!</td>
+                                </tr>
+                            <?php endif; ?>
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
@@ -204,8 +188,12 @@ $recent_ideas = $recent_stmt->get_result();
     </div>
 </div>
 
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.bundle.min.js"></script>
-<script src="../assets/js/script.js"></script>
+<?php
+// Close SQL statement and database connection
+$stmt_recent->close();
+$conn->close();
+?>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

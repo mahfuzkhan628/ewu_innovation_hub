@@ -37,11 +37,13 @@ $active_page = basename($_SERVER['PHP_SELF']);
                 📁 My Submitted Ideas
             </a>
         </li>
-        <li class="nav-item mb-1">
-            <a href="mentorship.php" class="nav-link text-white <?php echo ($active_page == 'mentorship.php') ? 'active' : ''; ?>">
-                👨‍🏫 My Mentors
-            </a>
-        </li>
+
+       <li class="nav-item mb-1">
+           <a href="mentors.php" class="nav-link text-white <?php echo ($active_page == 'mentors.php') ? 'active' : ''; ?>">
+              👨‍🏫 My Mentors
+           </a>
+       </li>
+
     </ul>
 
     <hr class="text-secondary">
