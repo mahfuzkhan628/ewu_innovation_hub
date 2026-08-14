@@ -5,11 +5,6 @@
             EWU Innovation Hub
         </a>
 
-        <!-- Mobile Menu Toggle Button -->
-        <button class="hamburger" id="mobileMenuToggle" aria-label="Toggle Navigation">
-            ☰
-        </button>
-
         <div class="nav-links" id="navLinks">
             <a href="index.php">Home</a>
             <a href="index.php#about">About</a>

@@ -63,16 +63,9 @@ const heroCard = document.querySelector(".hero-card");
 if (heroCard) {
     heroCard.addEventListener("mousemove", (e) => {
         let rect = heroCard.getBoundingClientRect();
-        let x = e.clientX - rect.left;
-        let y = e.clientY - rect.top;
-
-        let rotateX = ((y - rect.height / 2) / 20) * -1;
-        let rotateY = (x - rect.width / 2) / 20;
 
         heroCard.style.transform = `
             perspective(1000px)
-            rotateX(${rotateX}deg)
-            rotateY(${rotateY}deg)
             scale(1.05)
         `;
     });
@@ -80,8 +73,6 @@ if (heroCard) {
     heroCard.addEventListener("mouseleave", () => {
         heroCard.style.transform = `
             perspective(1000px)
-            rotateX(0deg)
-            rotateY(0deg)
             scale(1)
         `;
     });
