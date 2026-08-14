@@ -5,7 +5,12 @@
             EWU Innovation Hub
         </a>
 
-        <div class="nav-links">
+        <!-- Mobile Menu Toggle Button -->
+        <button class="hamburger" id="mobileMenuToggle" aria-label="Toggle Navigation">
+            ☰
+        </button>
+
+        <div class="nav-links" id="navLinks">
             <a href="index.php">Home</a>
             <a href="index.php#about">About</a>
             <a href="index.php#ideas">Ideas</a>
