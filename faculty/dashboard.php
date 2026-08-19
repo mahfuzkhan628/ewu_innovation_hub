@@ -78,9 +78,10 @@ $recent_pending_result = $stmt_recent->get_result();
             min-height: 100vh;
         }
         .main-content { 
-            flex-grow: 1;
-            padding: 30px; 
-            width: calc(100% - 260px);
+            margin-left: 0;  
+            flex: 1;          
+            padding: 30px;
+            width: 100%;
         }
         .card.bg-dark {
             background: rgba(30, 41, 59, 0.7) !important;

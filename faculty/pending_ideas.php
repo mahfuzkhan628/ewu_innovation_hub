@@ -59,7 +59,7 @@ $result = $stmt->get_result();
             overflow-x: hidden;
         }
         .dashboard-wrapper { display: flex; min-height: 100vh; }
-        .main-content { flex-grow: 1; padding: 30px; width: calc(100% - 260px); }
+        .main-content { margin-left: 0; flex: 1; padding: 30px; width: 100%; }
         .card.bg-dark {
             background: rgba(30, 41, 59, 0.7) !important;
             backdrop-filter: blur(10px);
