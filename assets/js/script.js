@@ -57,28 +57,6 @@ if (navbar) {
 }
 
 /* =========================
-   Hero Card 3D Tilt Effect
-========================= */
-const heroCard = document.querySelector(".hero-card");
-if (heroCard) {
-    heroCard.addEventListener("mousemove", (e) => {
-        let rect = heroCard.getBoundingClientRect();
-
-        heroCard.style.transform = `
-            perspective(1000px)
-            scale(1.05)
-        `;
-    });
-
-    heroCard.addEventListener("mouseleave", () => {
-        heroCard.style.transform = `
-            perspective(1000px)
-            scale(1)
-        `;
-    });
-}
-
-/* =========================
    Feature Scroll Reveal
 ========================= */
 const features = document.querySelectorAll(".feature-card");
@@ -152,36 +130,7 @@ document.querySelectorAll("a[href^='#']").forEach(link => {
     });
 });
 
-/* =========================
-   LOGIN CARD 3D EFFECT
-========================= */
-const authCard = document.querySelector(".auth-card");
-if (authCard) {
-    authCard.addEventListener("mousemove", (e) => {
-        const rect = authCard.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
 
-        let rotateX = ((y - rect.height / 2) / 25) * -1;
-        let rotateY = (x - rect.width / 2) / 25;
-
-        authCard.style.transform = `
-            perspective(1000px)
-            rotateX(${rotateX}deg)
-            rotateY(${rotateY}deg)
-            scale(1.01)
-        `;
-    });
-
-    authCard.addEventListener("mouseleave", () => {
-        authCard.style.transform = `
-            perspective(1000px)
-            rotateX(0deg)
-            rotateY(0deg)
-            scale(1)
-        `;
-    });
-}
 
 /* =========================
    INPUT FOCUS ANIMATION

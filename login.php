@@ -3,7 +3,6 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// ইউজার যদি আগেই লগইন করা থাকে, তবে তাকে ড্যাশবোর্ডে পাঠিয়ে দাও
 if (isset($_SESSION['user_id'])) {
     if ($_SESSION['role'] === 'student') {
         header("Location: student/dashboard.php");
