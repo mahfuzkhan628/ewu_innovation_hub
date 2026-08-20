@@ -14,7 +14,8 @@ $sql = "SELECT
             i.idea_id, 
             i.title, 
             i.category, 
-            i.description, 
+            i.description,
+            i.idea_file,
             i.status, 
             i.submitted_at, 
             u.name AS student_name, 
@@ -113,6 +114,24 @@ if (!$idea) {
                     <p style="white-space: pre-line;" class="text-white-50 leading-relaxed fs-6">
                         <?php echo htmlspecialchars($idea['description']); ?>
                     </p>
+
+                    <?php if (!empty($idea['idea_file'])): ?>
+                        <div class="mt-4 p-3 border border-info rounded">
+                            <h5 class="text-cyan fw-bold">📎 Submitted Idea File</h5>
+
+                            <a
+                                href="download_idea_file.php?id=<?php echo (int) $idea['idea_id']; ?>"
+                                target="_blank"
+                                class="btn btn-info text-dark fw-bold"
+                            >
+                                View / Download File
+                            </a>
+                        </div>
+                    <?php else: ?>
+                        <div class="mt-4 p-3 border border-secondary rounded text-white-50">
+                            No file was uploaded for this idea.
+                        </div>
+                    <?php endif; ?>
 
                     <div class="mt-4 pt-3 border-top border-secondary text-white-50 small d-flex justify-content-between">
                         <span>📅 Submitted: <?php echo date('F d, Y', strtotime($idea['submitted_at'])); ?></span>

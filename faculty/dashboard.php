@@ -40,6 +40,7 @@ $sql_recent_pending = "SELECT
                           i.idea_id, 
                           i.title, 
                           i.category, 
+                          i.idea_file,
                           i.submitted_at, 
                           u.name AS student_name, 
                           u.department AS student_dept 
@@ -173,7 +174,24 @@ $recent_pending_result = $stmt_recent->get_result();
                                     <td><span class="badge bg-secondary"><?php echo htmlspecialchars($idea['category']); ?></span></td>
                                     <td><?php echo date('M d, Y', strtotime($idea['submitted_at'])); ?></td>
                                     <td class="text-end">
-                                        <a href="review_idea.php?id=<?php echo $idea['idea_id']; ?>" class="btn btn-sm btn-info text-dark fw-bold">Evaluate</a>
+                                        <?php if (!empty($idea['idea_file'])): ?>
+                                            <a
+                                                href="download_idea_file.php?id=<?php echo (int) $idea['idea_id']; ?>"
+                                                target="_blank"
+                                                class="btn btn-sm btn-outline-info mb-1"
+                                            >
+                                                📎 View File
+                                            </a>
+                                        <?php else: ?>
+                                            <span class="text-muted">No file uploaded</span>
+                                        <?php endif; ?>
+
+                                        <a
+                                            href="review_idea.php?id=<?php echo (int) $idea['idea_id']; ?>"
+                                            class="btn btn-sm btn-info text-dark fw-bold"
+                                        >
+                                            Evaluate
+                                        </a>
                                     </td>
                                 </tr>
                             <?php endwhile; ?>

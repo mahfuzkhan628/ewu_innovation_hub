@@ -12,38 +12,93 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $student_id = $_SESSION['user_id'];
     
     // Sanitize and collect form input values
-    $title = trim($_POST['title']);
-    $category = trim($_POST['category']);
-    $description = trim($_POST['description']);
+    $title = trim($_POST['title'] ?? '');
+    $category = trim($_POST['category'] ?? '');
+    $description = trim($_POST['description'] ?? '');
 
-    // Ensure all mandatory fields are filled out
-    if (!empty($title) && !empty($category) && !empty($description)) {
-        
-        /* 
-           SQL QUERY: Insert new idea entry into 'ideas' table.
-           Default status is set to 'pending' upon submission.
-        */
-        $sql = "INSERT INTO ideas (student_id, title, category, description, status) VALUES (?, ?, ?, ?, 'pending')";
-        
-        // Prepare SQL statement to prevent SQL Injection attacks
+    $idea_file = null;
+    $upload_error = '';
+
+    if (!empty($_FILES['idea_file']['name'])) {
+        $file = $_FILES['idea_file'];
+        $max_size = 10 * 1024 * 1024;
+
+        $allowed_types = [
+            'application/pdf' => 'pdf',
+            'application/msword' => 'doc',
+            'application/vnd.openxmlformats-officedocument.wordprocessingml.document' => 'docx',
+            'application/vnd.ms-powerpoint' => 'ppt',
+            'application/vnd.openxmlformats-officedocument.presentationml.presentation' => 'pptx'
+        ];
+
+        if ($file['error'] !== UPLOAD_ERR_OK) {
+            $upload_error = 'File upload failed.';
+        } elseif ($file['size'] > $max_size) {
+            $upload_error = 'File size must not exceed 10 MB.';
+        } else {
+            $finfo = new finfo(FILEINFO_MIME_TYPE);
+            $mime_type = $finfo->file($file['tmp_name']);
+
+            if (!isset($allowed_types[$mime_type])) {
+                $upload_error = 'Only PDF, DOC, DOCX, PPT, and PPTX files are allowed.';
+            } else {
+                $upload_dir = __DIR__ . '/../uploads/ideas/';
+
+                if (!is_dir($upload_dir)) {
+                    mkdir($upload_dir, 0755, true);
+                }
+
+                $idea_file = bin2hex(random_bytes(16)) . '.' . $allowed_types[$mime_type];
+
+                if (!move_uploaded_file(
+                    $file['tmp_name'],
+                    $upload_dir . $idea_file
+                )) {
+                    $upload_error = 'Unable to save the uploaded file.';
+                    $idea_file = null;
+                }
+            }
+        }
+    }
+
+    if (
+        !empty($title) &&
+        !empty($category) &&
+        !empty($description) &&
+        empty($upload_error)
+    ) {
+        $sql = "INSERT INTO ideas
+                (student_id, title, category, description, idea_file, status)
+                VALUES (?, ?, ?, ?, ?, 'pending')";
+
         $stmt = $conn->prepare($sql);
-        
-        // Bind input parameters to SQL placeholders (i = integer, s = string)
-        $stmt->bind_param("isss", $student_id, $title, $category, $description);
+        $stmt->bind_param(
+            "issss",
+            $student_id,
+            $title,
+            $category,
+            $description,
+            $idea_file
+        );
 
-        // Execute SQL query and check if execution succeeded
         if ($stmt->execute()) {
             // Redirect to prevent form resubmission on page refresh (PRG Pattern)
             header("Location: submit_idea.php?status=success");
             exit();
-        } else {
-            $message = '<div class="alert alert-danger">❌ Database Error! Could not save your idea.</div>';
         }
-        
-        // Close database prepared statement
+
+        $message = '<div class="alert alert-danger">
+            ❌ Database Error! Could not save your idea.
+        </div>';
+
         $stmt->close();
+    } elseif (!empty($upload_error)) {
+        $message = '<div class="alert alert-warning">⚠️ ' .
+            htmlspecialchars($upload_error) . '</div>';
     } else {
-        $message = '<div class="alert alert-warning">⚠️ Please fill in all required fields.</div>';
+        $message = '<div class="alert alert-warning">
+            ⚠️ Please fill in all required fields.
+        </div>';
     }
 }
 
@@ -82,7 +137,55 @@ if (isset($_GET['status']) && $_GET['status'] == 'success') {
         .text-cyan { color: #06b6d4 !important; }
         .form-control, .form-select {
             background-color: rgba(15, 23, 42, 0.8) !important;
-            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            border:            <?php
+            // filepath: c:\xampp\htdocs\ewu_innovation_hub\faculty\download_idea_file.php
+            
+            include "../includes/session.php";
+            include "../config/database.php";
+            
+            $idea_id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
+            
+            if (!$idea_id) {
+                http_response_code(400);
+                exit("Invalid idea ID.");
+            }
+            
+            $stmt = $conn->prepare("SELECT idea_file FROM ideas WHERE id = ?");
+            $stmt->bind_param("i", $idea_id);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $idea = $result->fetch_assoc();
+            $stmt->close();
+            
+            if (!$idea || empty($idea['idea_file'])) {
+                http_response_code(404);
+                exit("No file found.");
+            }
+            
+            $file_path = realpath(__DIR__ . "/../uploads/ideas/" . basename($idea['idea_file']));
+            $upload_dir = realpath(__DIR__ . "/../uploads/ideas");
+            
+            if (
+                !$file_path ||
+                !$upload_dir ||
+                strpos($file_path, $upload_dir) !== 0 ||
+                !is_file($file_path)
+            ) {
+                http_response_code(404);
+                exit("File not found.");
+            }
+            
+            $mime_type = mime_content_type($file_path);
+            
+            header("Content-Type: " . $mime_type);
+            header("Content-Length: " . filesize($file_path));
+            header(
+                'Content-Disposition: inline; filename="' .
+                basename($file_path) . '"'
+            );
+            
+            readfile($file_path);
+            exit; 1px solid rgba(255, 255, 255, 0.1) !important;
             color: #ffffff !important;
         }
         .form-control:focus, .form-select:focus {
@@ -116,7 +219,7 @@ if (isset($_GET['status']) && $_GET['status'] == 'success') {
                 <div class="col-lg-8">
                     <div class="card bg-dark text-white p-4 shadow-sm">
                         <!-- Submission Form targeting the same file -->
-                        <form action="submit_idea.php" method="POST">
+                        <form action="submit_idea.php" method="POST" enctype="multipart/form-data">
                             
                             <!-- Idea Title Field -->
                             <div class="mb-3">
@@ -142,6 +245,25 @@ if (isset($_GET['status']) && $_GET['status'] == 'success') {
                             <div class="mb-4">
                                 <label for="description" class="form-label fw-semibold">Idea Description & Problem Statement <span class="text-danger">*</span></label>
                                 <textarea class="form-control" id="description" name="description" rows="6" placeholder="Explain the problem statement, proposed technology stack, and potential impact..." required></textarea>
+                            </div>
+
+                            <!-- File Upload Field -->
+                            <div class="mb-4">
+                                <label for="idea_file" class="form-label fw-semibold">
+                                    Upload Idea File
+                                </label>
+
+                                <input
+                                    type="file"
+                                    class="form-control"
+                                    id="idea_file"
+                                    name="idea_file"
+                                    accept=".pdf,.doc,.docx,.ppt,.pptx"
+                                >
+
+                                <div class="form-text text-white-50">
+                                    Optional. PDF, DOC, DOCX, PPT, or PPTX. Maximum size: 10 MB.
+                                </div>
                             </div>
 
                             <!-- Form Action Buttons -->
